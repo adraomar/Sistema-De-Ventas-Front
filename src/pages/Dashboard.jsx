@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+    const [users, setUsers] = useState([]);
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const res = await api.get("/users");
+                setUsers(res.data);
+            } catch (error) {
+                console.log("Error: ", error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
 
     const handleLogout = () => {
         // limpiar sesión (después podés usar localStorage o JWT)
@@ -46,6 +60,11 @@ const Dashboard = () => {
                 {/* CONTENIDO DINÁMICO */}
                 <div className="p-4">
                     <Outlet />
+                    {users.map(user => (
+                        <div key={user.id}>
+                            {user.name} - {user.email}
+                        </div>
+                    ))}
                 </div>
 
             </div>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import api from "../../api/api";
 
 const LoginForm = () => {
-
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
@@ -16,15 +16,16 @@ const LoginForm = () => {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        if (form.email == "admin@admin" && form.password == "4275591") {
-            navigate('/dashboard')
-        } else if(!form.email || !form.password) {
-            alert('Completa todos los campos')
-        } else {
-            alert('Nombre de usuario y/o contraseña no son válidos.');
+        try {
+            const res = await api.post("/users/login", { email, password });
+            localStorage.setItem("token", res.data.token);
+            alert("Login exitoso");
+            navigate('/dashboard');
+        } catch (error) {
+            alert("Error en login");
         }
     }
 
