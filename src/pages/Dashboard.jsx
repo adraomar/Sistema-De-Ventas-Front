@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import api from "../api/api.js";
 
 const Dashboard = () => {
     const [users, setUsers] = useState([]);
@@ -59,11 +60,14 @@ const Dashboard = () => {
 
                 {/* CONTENIDO DINÁMICO */}
                 <div className="p-4">
-                    <Outlet />
                     {users.map(user => (
                         <div key={user.id}>
-                            {user.name} - {user.email}
+                            <h3 className="h3">{user.lastname}, {user.firstname}</h3>
+                            <h4 className="h4">Nombre de usuario: {user.username}</h4>
+                            <h4 className="h4">Correo electrónico: {user.email}</h4>
+                            <hr></hr>
                         </div>
+                        
                     ))}
                 </div>
 
