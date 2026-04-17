@@ -4,9 +4,9 @@ import LoginPage from '../pages/LoginPage';
 import Dashboard from '../pages/Dashboard';
 
 // Pages
-import DashboardHome from '../components/DashboardHome/DashboardHome';
-import DashboardUsers from '../components/DashboardUsers/DashboardUsers';
-import DashboardSettings from '../components/DashboardSettings/DashboardSettings';
+import DashboardHome from '../components/Dashboard/DashboardHome/DashboardHome';
+import DashboardUsers from '../components/Dashboard/DashboardUsers/DashboardUsers';
+import DashboardSettings from '../components/Dashboard/DashboardSettings/DashboardSettings';
 import RegisterPage from '../pages/RegisterPage';
 
 const Settings = () => <h2 className='h2'>Settings</h2>

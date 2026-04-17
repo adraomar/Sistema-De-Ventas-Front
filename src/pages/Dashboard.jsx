@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import api from "../api/api.js";
+import Sidebar from '../components/Dashboard/Sidebar/Sidebar.jsx';
 
 const Dashboard = () => {
-    const [users, setUsers] = useState([]);
+    const [user, setUser] = useState({});
     const navigate = useNavigate()
 
     useEffect(() => {
-        const fetchUsers = async () => {
+        const getUser = async () => {
             try {
-                const res = await api.get("/users");
-                setUsers(res.data);
+                const token = localStorage.getItem("token");
+
+                const res = await api.get("/users/user", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                setUser(res.data);
             } catch (error) {
                 console.log("Error: ", error);
             }
         };
 
-        fetchUsers();
+        getUser();
     }, []);
 
     const handleLogout = () => {
@@ -28,47 +36,35 @@ const Dashboard = () => {
         <div className="d-flex">
 
             {/* SIDEBAR */}
-            <div className="bg-dark text-white p-3 vh-100" style={{ width: '250px' }}>
-                <h4 className="text-center mb-4">Mi Panel</h4>
-
-                <ul className="nav flex-column">
-                    <li className="nav-item mb-2">
-                        <Link to="/dashboard" className="nav-link text-white">🏠 Inicio</Link>
-                    </li>
-
-                    <li className="nav-item mb-2">
-                        <Link to="/dashboard/users" className="nav-link text-white">👤 Usuarios</Link>
-                    </li>
-
-                    <li className="nav-item mb-2">
-                        <Link to="/dashboard/settings" className="nav-link text-white">⚙️ Configuración</Link>
-                    </li>
-                </ul>
-            </div>
+            <Sidebar/>
 
             {/* CONTENIDO */}
             <div className="flex-grow-1">
 
                 {/* NAVBAR */}
-                <nav className="navbar navbar-light bg-light shadow-sm px-4">
+                <nav className="navbar navbar-light bg-light shadow-sm px-4 d-flex justify-content-between">
+
+                    {/* IZQUIERDA */}
                     <span className="navbar-brand mb-0 h5">Dashboard</span>
 
-                    <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>
-                        Cerrar sesión
-                    </button>
+                    {/* DERECHA */}
+                    <div className="d-flex align-items-center gap-3">
+                        <span>
+                            {user?.lastname}, {user?.firstname}
+                        </span>
+
+                        <button
+                            className="btn btn-outline-danger btn-sm"
+                            onClick={handleLogout}
+                        >
+                            Cerrar sesión
+                        </button>
+                    </div>
+
                 </nav>
 
                 {/* CONTENIDO DINÁMICO */}
                 <div className="p-4">
-                    {users.map(user => (
-                        <div key={user.id}>
-                            <h3 className="h3">{user.lastname}, {user.firstname}</h3>
-                            <h4 className="h4">Nombre de usuario: {user.username}</h4>
-                            <h4 className="h4">Correo electrónico: {user.email}</h4>
-                            <hr></hr>
-                        </div>
-                        
-                    ))}
                 </div>
 
             </div>
