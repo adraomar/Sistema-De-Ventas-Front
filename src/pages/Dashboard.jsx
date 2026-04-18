@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import api from "../api/api.js";
 import Sidebar from '../components/Dashboard/Sidebar/Sidebar.jsx';
+import Navbar from '../components/Dashboard/Navbar/Navbar.jsx';
+import "../components/Dashboard/Dashboard.css";
+import "../components/Dashboard/Dashboard.js";
 
 const Dashboard = () => {
     const [user, setUser] = useState({});
@@ -27,49 +30,26 @@ const Dashboard = () => {
         getUser();
     }, []);
 
-    const handleLogout = () => {
-        // limpiar sesión (después podés usar localStorage o JWT)
-        navigate('/')
-    }
-
     return (
-        <div className="d-flex">
-
-            {/* SIDEBAR */}
-            <Sidebar/>
-
-            {/* CONTENIDO */}
-            <div className="flex-grow-1">
-
-                {/* NAVBAR */}
-                <nav className="navbar navbar-light bg-light shadow-sm px-4 d-flex justify-content-between">
-
-                    {/* IZQUIERDA */}
-                    <span className="navbar-brand mb-0 h5">Dashboard</span>
-
-                    {/* DERECHA */}
-                    <div className="d-flex align-items-center gap-3">
-                        <span>
-                            {user?.lastname}, {user?.firstname}
-                        </span>
-
-                        <button
-                            className="btn btn-outline-danger btn-sm"
-                            onClick={handleLogout}
-                        >
-                            Cerrar sesión
-                        </button>
-                    </div>
-
-                </nav>
-
-                {/* CONTENIDO DINÁMICO */}
-                <div className="p-4">
+        <>
+            <Navbar user={user}/>
+            <div id="layoutSidenav">
+                <Sidebar user={user}/>
+                <div id="layoutSidenav_content">
+                    <main>
+                        <Outlet/>
+                    </main>
+                    <footer className="py-4 bg-light mt-auto">
+                        <div className="container-fluid px-4">
+                            <div className="d-flex align-items-center justify-content-between small">
+                                <div className="text-muted">Copyright &copy; Puesto de Ventas 1.0 - Todos los derechos reservados 2026</div>
+                            </div>
+                        </div>
+                    </footer>
                 </div>
-
             </div>
-        </div>
-    )
+        </>
+    );
 }
 
 export default Dashboard
