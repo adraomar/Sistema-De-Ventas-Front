@@ -3,7 +3,17 @@ import React, { useState } from 'react'
 const ProductsList = () => {
     const [products, setProducts] = useState([
         { id: 1, name: 'Producto 1', price: 100 },
-        { id: 2, name: 'Producto 2', price: 200 }
+        { id: 2, name: 'Producto 2', price: 200 },
+        { id: 3, name: 'Producto 3', price: 300 },
+        { id: 4, name: 'Producto 4', price: 400 },
+        { id: 5, name: 'Producto 5', price: 500 },
+        { id: 6, name: 'Producto 6', price: 600 },
+        { id: 7, name: 'Producto 7', price: 700 },
+        { id: 8, name: 'Producto 8', price: 800 },
+        { id: 9, name: 'Producto 9', price: 900 },
+        { id: 10, name: 'Producto 10', price: 1000 },
+        { id: 11, name: 'Producto 11', price: 1100 },
+        { id: 12, name: 'Producto 12', price: 1200 }
     ])
 
     const [search, setSearch] = useState('')
@@ -14,34 +24,47 @@ const ProductsList = () => {
         price: ''
     })
 
+    // 👉 PAGINACIÓN
+    const [currentPage, setCurrentPage] = useState(1)
+    const productsPerPage = 10
+
     // Filtrar productos
     const filteredProducts = products.filter(p =>
         p.name.toLowerCase().includes(search.toLowerCase())
     )
 
-    // Abrir modal para crear
+    // Resetear página al buscar
+    const handleSearch = (value) => {
+        setSearch(value)
+        setCurrentPage(1)
+    }
+
+    // Calcular productos a mostrar
+    const indexOfLast = currentPage * productsPerPage
+    const indexOfFirst = indexOfLast - productsPerPage
+    const currentProducts = filteredProducts.slice(indexOfFirst, indexOfLast)
+
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage)
+
+    // CRUD
     const handleCreate = () => {
         setCurrentProduct({ id: null, name: '', price: '' })
         setShowModal(true)
     }
 
-    // Abrir modal para editar
     const handleEdit = (product) => {
         setCurrentProduct(product)
         setShowModal(true)
     }
 
-    // Guardar producto
     const handleSave = () => {
         if (!currentProduct.name || !currentProduct.price) return
 
         if (currentProduct.id) {
-            // Editar
             setProducts(products.map(p =>
                 p.id === currentProduct.id ? currentProduct : p
             ))
         } else {
-            // Crear
             const newProduct = {
                 ...currentProduct,
                 id: Date.now()
@@ -52,7 +75,6 @@ const ProductsList = () => {
         setShowModal(false)
     }
 
-    // Eliminar
     const handleDelete = (id) => {
         setProducts(products.filter(p => p.id !== id))
     }
@@ -68,7 +90,7 @@ const ProductsList = () => {
                     className="form-control w-50"
                     placeholder="Buscar producto..."
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e) => handleSearch(e.target.value)}
                 />
 
                 <button className="btn btn-primary" onClick={handleCreate}>
@@ -87,7 +109,7 @@ const ProductsList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredProducts.map(product => (
+                    {currentProducts.map(product => (
                         <tr key={product.id}>
                             <td>{product.id}</td>
                             <td>{product.name}</td>
@@ -111,67 +133,42 @@ const ProductsList = () => {
                 </tbody>
             </table>
 
-            {/* Modal */}
-            {showModal && (
-                <div className="modal d-block" tabIndex="-1">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">
-                                    {currentProduct.id ? 'Editar' : 'Nuevo'} Producto
-                                </h5>
-                                <button
-                                    className="btn-close"
-                                    onClick={() => setShowModal(false)}
-                                ></button>
-                            </div>
+            {/* 👉 PAGINACIÓN UI */}
+            <nav>
+                <ul className="pagination justify-content-center">
+                    <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
+                        <button
+                            className="page-link"
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                        >
+                            Anterior
+                        </button>
+                    </li>
 
-                            <div className="modal-body">
-                                <input
-                                    type="text"
-                                    className="form-control mb-3"
-                                    placeholder="Nombre"
-                                    value={currentProduct.name}
-                                    onChange={(e) =>
-                                        setCurrentProduct({
-                                            ...currentProduct,
-                                            name: e.target.value
-                                        })
-                                    }
-                                />
+                    {[...Array(totalPages)].map((_, i) => (
+                        <li
+                            key={i}
+                            className={`page-item ${currentPage === i + 1 && 'active'}`}
+                        >
+                            <button
+                                className="page-link"
+                                onClick={() => setCurrentPage(i + 1)}
+                            >
+                                {i + 1}
+                            </button>
+                        </li>
+                    ))}
 
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    placeholder="Precio"
-                                    value={currentProduct.price}
-                                    onChange={(e) =>
-                                        setCurrentProduct({
-                                            ...currentProduct,
-                                            price: e.target.value
-                                        })
-                                    }
-                                />
-                            </div>
-
-                            <div className="modal-footer">
-                                <button
-                                    className="btn btn-secondary"
-                                    onClick={() => setShowModal(false)}
-                                >
-                                    Cancelar
-                                </button>
-                                <button
-                                    className="btn btn-success"
-                                    onClick={handleSave}
-                                >
-                                    Guardar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+                    <li className={`page-item ${currentPage === totalPages && 'disabled'}`}>
+                        <button
+                            className="page-link"
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                        >
+                            Siguiente
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </div>
     )
 }
