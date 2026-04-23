@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { userContext } from '../../../context/userContext.js';
 
-const Navbar = ({ user }) => {
+const Navbar = () => {
     const navigate = useNavigate();
+    const { user } = useContext(userContext);
 
     const handleClick = () => {
         navigate("/");

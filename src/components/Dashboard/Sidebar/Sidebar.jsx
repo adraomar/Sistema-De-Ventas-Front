@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from "react-router-dom";
+import { userContext } from '../../../context/userContext';
 
 
-const Sidebar = ({ user }) => {
+const Sidebar = () => {
+    const { user } = useContext(userContext);
+
     return (
         <div id="layoutSidenav_nav">
             <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -15,7 +18,7 @@ const Sidebar = ({ user }) => {
                         </Link>
                         <div className="sb-sidenav-menu-heading">Gestion</div>
                         <Link className="nav-link collapsed" to="/sales" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapseSales">
-                            <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
+                            <div className="sb-nav-link-icon"><i className="fa fa-shopping-bag" aria-hidden="true"></i></div>
                             Ventas
                             <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                         </Link>

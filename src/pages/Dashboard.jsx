@@ -1,43 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import api from "../api/api.js";
+import React from 'react'
+import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/Dashboard/Sidebar/Sidebar.jsx';
 import Navbar from '../components/Dashboard/Navbar/Navbar.jsx';
 import "../components/Dashboard/Dashboard.css";
 import "../components/Dashboard/Dashboard.js";
 
 const Dashboard = () => {
-    const [user, setUser] = useState({});
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        const getUser = async () => {
-            try {
-                const token = localStorage.getItem("token");
-
-                const res = await api.get("/users/user", {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                setUser(res.data);
-            } catch (error) {
-                console.log("Error: ", error);
-            }
-        };
-
-        getUser();
-    }, []);
-
     return (
         <>
-            <Navbar user={user}/>
+            <Navbar/>
             <div id="layoutSidenav">
-                <Sidebar user={user}/>
+                <Sidebar />
                 <div id="layoutSidenav_content">
                     <main>
-                        <Outlet/>
+                        <Outlet />
                     </main>
                     <footer className="py-4 bg-light mt-auto">
                         <div className="container-fluid px-4">
