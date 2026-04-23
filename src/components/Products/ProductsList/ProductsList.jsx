@@ -24,29 +24,24 @@ const ProductsList = () => {
         price: ''
     })
 
-    // 👉 PAGINACIÓN
     const [currentPage, setCurrentPage] = useState(1)
     const productsPerPage = 10
 
-    // Filtrar productos
     const filteredProducts = products.filter(p =>
         p.name.toLowerCase().includes(search.toLowerCase())
     )
 
-    // Resetear página al buscar
     const handleSearch = (value) => {
         setSearch(value)
         setCurrentPage(1)
     }
 
-    // Calcular productos a mostrar
     const indexOfLast = currentPage * productsPerPage
     const indexOfFirst = indexOfLast - productsPerPage
     const currentProducts = filteredProducts.slice(indexOfFirst, indexOfLast)
 
     const totalPages = Math.ceil(filteredProducts.length / productsPerPage)
 
-    // CRUD
     const handleCreate = () => {
         setCurrentProduct({ id: null, name: '', price: '' })
         setShowModal(true)
@@ -83,7 +78,6 @@ const ProductsList = () => {
         <div className="container mt-4">
             <h2 className="mb-4">Administrar Productos</h2>
 
-            {/* Buscador + botón */}
             <div className="d-flex justify-content-between mb-3">
                 <input
                     type="text"
@@ -98,7 +92,6 @@ const ProductsList = () => {
                 </button>
             </div>
 
-            {/* Tabla */}
             <table className="table table-striped">
                 <thead className="table-dark">
                     <tr>
@@ -133,42 +126,98 @@ const ProductsList = () => {
                 </tbody>
             </table>
 
-            {/* 👉 PAGINACIÓN UI */}
+            {/* PAGINACIÓN */}
             <nav>
                 <ul className="pagination justify-content-center">
                     <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
-                        <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(currentPage - 1)}
-                        >
+                        <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)}>
                             Anterior
                         </button>
                     </li>
 
                     {[...Array(totalPages)].map((_, i) => (
-                        <li
-                            key={i}
-                            className={`page-item ${currentPage === i + 1 && 'active'}`}
-                        >
-                            <button
-                                className="page-link"
-                                onClick={() => setCurrentPage(i + 1)}
-                            >
+                        <li key={i} className={`page-item ${currentPage === i + 1 && 'active'}`}>
+                            <button className="page-link" onClick={() => setCurrentPage(i + 1)}>
                                 {i + 1}
                             </button>
                         </li>
                     ))}
 
                     <li className={`page-item ${currentPage === totalPages && 'disabled'}`}>
-                        <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(currentPage + 1)}
-                        >
+                        <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)}>
                             Siguiente
                         </button>
                     </li>
                 </ul>
             </nav>
+
+            {/* 🔥 MODAL */}
+            {showModal && (
+                <>
+                    <div className="modal-backdrop fade show"></div>
+
+                    <div className="modal fade show d-block" tabIndex="-1">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+
+                                <div className="modal-header">
+                                    <h5 className="modal-title">
+                                        {currentProduct.id ? 'Editar' : 'Nuevo'} Producto
+                                    </h5>
+                                    <button
+                                        className="btn-close"
+                                        onClick={() => setShowModal(false)}
+                                    ></button>
+                                </div>
+
+                                <div className="modal-body">
+                                    <input
+                                        type="text"
+                                        className="form-control mb-3"
+                                        placeholder="Nombre"
+                                        value={currentProduct.name}
+                                        onChange={(e) =>
+                                            setCurrentProduct({
+                                                ...currentProduct,
+                                                name: e.target.value
+                                            })
+                                        }
+                                    />
+
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        placeholder="Precio"
+                                        value={currentProduct.price}
+                                        onChange={(e) =>
+                                            setCurrentProduct({
+                                                ...currentProduct,
+                                                price: e.target.value
+                                            })
+                                        }
+                                    />
+                                </div>
+
+                                <div className="modal-footer">
+                                    <button
+                                        className="btn btn-secondary"
+                                        onClick={() => setShowModal(false)}
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        className="btn btn-success"
+                                        onClick={handleSave}
+                                    >
+                                        Guardar
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     )
 }
