@@ -2,18 +2,18 @@ import React, { useState } from 'react'
 
 const ProductsList = () => {
     const [products, setProducts] = useState([
-        { id: 1, name: 'Producto 1', price: 100 },
-        { id: 2, name: 'Producto 2', price: 200 },
-        { id: 3, name: 'Producto 3', price: 300 },
-        { id: 4, name: 'Producto 4', price: 400 },
-        { id: 5, name: 'Producto 5', price: 500 },
-        { id: 6, name: 'Producto 6', price: 600 },
-        { id: 7, name: 'Producto 7', price: 700 },
-        { id: 8, name: 'Producto 8', price: 800 },
-        { id: 9, name: 'Producto 9', price: 900 },
-        { id: 10, name: 'Producto 10', price: 1000 },
-        { id: 11, name: 'Producto 11', price: 1100 },
-        { id: 12, name: 'Producto 12', price: 1200 }
+        { id: 1, name: 'Producto 1', price: 100, stock: 5000 },
+        { id: 2, name: 'Producto 2', price: 200, stock: 5000 },
+        { id: 3, name: 'Producto 3', price: 300, stock: 5000 },
+        { id: 4, name: 'Producto 4', price: 400, stock: 5000 },
+        { id: 5, name: 'Producto 5', price: 500, stock: 5000 },
+        { id: 6, name: 'Producto 6', price: 600, stock: 5000 },
+        { id: 7, name: 'Producto 7', price: 700, stock: 5000 },
+        { id: 8, name: 'Producto 8', price: 800, stock: 5000 },
+        { id: 9, name: 'Producto 9', price: 900, stock: 5000 },
+        { id: 10, name: 'Producto 10', price: 1000, stock: 5000 },
+        { id: 11, name: 'Producto 11', price: 1100, stock: 5000 },
+        { id: 12, name: 'Producto 12', price: 1200, stock: 5000 }
     ])
 
     const [search, setSearch] = useState('')
@@ -21,7 +21,8 @@ const ProductsList = () => {
     const [currentProduct, setCurrentProduct] = useState({
         id: null,
         name: '',
-        price: ''
+        price: '',
+        stock: ''
     })
 
     const [currentPage, setCurrentPage] = useState(1)
@@ -43,7 +44,7 @@ const ProductsList = () => {
     const totalPages = Math.ceil(filteredProducts.length / productsPerPage)
 
     const handleCreate = () => {
-        setCurrentProduct({ id: null, name: '', price: '' })
+        setCurrentProduct({ id: null, name: '', price: '', stock: '' })
         setShowModal(true)
     }
 
@@ -53,7 +54,7 @@ const ProductsList = () => {
     }
 
     const handleSave = () => {
-        if (!currentProduct.name || !currentProduct.price) return
+        if (!currentProduct.name || !currentProduct.price || !currentProduct.stock) return
 
         if (currentProduct.id) {
             setProducts(products.map(p =>
@@ -98,6 +99,7 @@ const ProductsList = () => {
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Precio</th>
+                        <th>Stock</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -107,6 +109,7 @@ const ProductsList = () => {
                             <td>{product.id}</td>
                             <td>{product.name}</td>
                             <td>${product.price}</td>
+                            <td>{product.stock}</td>
                             <td>
                                 <button
                                     className="btn btn-warning btn-sm me-2"
@@ -186,13 +189,26 @@ const ProductsList = () => {
 
                                     <input
                                         type="number"
-                                        className="form-control"
+                                        className="form-control mb-3"
                                         placeholder="Precio"
                                         value={currentProduct.price}
                                         onChange={(e) =>
                                             setCurrentProduct({
                                                 ...currentProduct,
                                                 price: e.target.value
+                                            })
+                                        }
+                                    />
+
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        placeholder="Stock"
+                                        value={currentProduct.stock}
+                                        onChange={(e) =>
+                                            setCurrentProduct({
+                                                ...currentProduct,
+                                                stock: e.target.value
                                             })
                                         }
                                     />
