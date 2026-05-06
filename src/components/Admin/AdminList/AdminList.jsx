@@ -6,13 +6,15 @@ const AdminList = () => {
     const [showModal, setShowModal] = useState(false);
     const [editingUser, setEditingUser] = useState(null);
 
+    const [roles, setRoles] = useState([]);
     const [form, setForm] = useState({
         username: "",
         password: "",
         confirmPassword: "",
         email: "",
         lastname: "",
-        firstname: ""
+        firstname: "",
+        rolid: ""
     });
 
     const [search, setSearch] = useState("");
@@ -41,7 +43,18 @@ const AdminList = () => {
 
     useEffect(() => {
         fetchUsers();
+        fetchRoles();
     }, []);
+
+    const fetchRoles = async () => {
+        try {
+            const response = await api.get("/roles/");
+            const data = await response.data;
+            setRoles(data);
+        } catch (error) {
+            console.error("Error al cargar roles: ", error);
+        }
+    };
 
     const fetchUsers = async () => {
         try {
@@ -102,7 +115,8 @@ const AdminList = () => {
                 password: form.password,
                 email: form.email,
                 lastname: form.lastname,
-                firstname: form.firstname
+                firstname: form.firstname,
+                rolid: parseInt(form.rolid)
             };
 
             if (editingUser) {
@@ -161,6 +175,7 @@ const AdminList = () => {
                         <th>Apellido y Nombre</th>
                         <th>Usuario</th>
                         <th>Correo electrónico</th>
+                        <th>Tipo de usuario</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -171,6 +186,16 @@ const AdminList = () => {
                             <td>{user.lastname}, {user.firstname}</td>
                             <td>{user.username}</td>
                             <td>{user.email}</td>
+                            <td>
+                                <span className={`badge ${user.rol === "Administrador"
+                                    ? "bg-danger"
+                                    : user.rol === "Vendedor"
+                                        ? "bg-warning"
+                                        : "bg-primary"
+                                    }`}>
+                                    {user.rol}
+                                </span>
+                            </td>
                             <td>
                                 <button
                                     className="btn btn-warning btn-sm me-2"
@@ -304,6 +329,24 @@ const AdminList = () => {
                                         value={form.email}
                                         onChange={handleChange}
                                     />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label>Tipo de Usuario</label>
+                                    <select
+                                        className="form-control"
+                                        name="rolid"
+                                        value={form.rolid}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">Seleccionar...</option>
+
+                                        {roles.map((rol) => (
+                                            <option key={rol.id} value={rol.id}>
+                                                {rol.name}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
 
