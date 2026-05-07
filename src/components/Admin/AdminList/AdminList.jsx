@@ -127,6 +127,7 @@ const AdminList = () => {
                 alert("Usuario actualizado correctamente");
             } else {
                 // CREAR USUARIO
+                console.log(payload);
                 await api.post("/users/", payload);
                 alert("Usuario creado correctamente");
             }
@@ -139,7 +140,7 @@ const AdminList = () => {
 
         } catch (error) {
             console.error("Error al guardar usuario:", error);
-            alert("Ocurrió un error al guardar el usuario");
+            alert("Ocurrió un error al guardar el usuario: ", error);
         }
     };
 
@@ -337,7 +338,7 @@ const AdminList = () => {
                                     <label>Tipo de Usuario</label>
                                     <select
                                         className="form-control"
-                                        name="rol"
+                                        name="rolid"
                                         value={form.rolid}
                                         onChange={handleChange}
                                     >
