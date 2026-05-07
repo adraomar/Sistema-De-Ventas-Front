@@ -74,7 +74,8 @@ const AdminList = () => {
                 ? {
                     ...user,
                     password: "",
-                    confirmPassword: ""
+                    confirmPassword: "",
+                    rolid: user.rolid
                 }
                 : {
                     username: "",
@@ -82,7 +83,8 @@ const AdminList = () => {
                     confirmPassword: "",
                     email: "",
                     lastname: "",
-                    firstname: ""
+                    firstname: "",
+                    rolid: ""
                 }
         );
 
@@ -335,7 +337,7 @@ const AdminList = () => {
                                     <label>Tipo de Usuario</label>
                                     <select
                                         className="form-control"
-                                        name="rolid"
+                                        name="rol"
                                         value={form.rolid}
                                         onChange={handleChange}
                                     >

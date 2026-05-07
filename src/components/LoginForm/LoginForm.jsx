@@ -20,9 +20,9 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            const res = await api.post("/auth/login", { 
-                username: form.username, 
-                password: form.password 
+            const res = await api.post("/auth/login", {
+                username: form.username,
+                password: form.password
             });
 
             localStorage.setItem("token", res.data.token);
@@ -32,7 +32,7 @@ const LoginForm = () => {
             alert("Error en login. Error: " + error);
         }
     };
-    
+
     const handleClick = () => {
         navigate('/register');
     };
