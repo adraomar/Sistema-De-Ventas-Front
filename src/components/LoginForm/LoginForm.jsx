@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import api from "../../api/api.js";
+import "../LoginForm/LoginForm.css";
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -37,6 +38,7 @@ const LoginForm = () => {
         navigate('/register');
     };
 
+    /*
     return (
         <form onSubmit={handleSubmit}>
             <div className="mb-3">
@@ -70,6 +72,38 @@ const LoginForm = () => {
             </button>
 
         </form>
+    )*/
+
+    return (
+        <div className="login-card">
+            <h1>Iniciar Sesión</h1>
+            <p>
+                Accede de forma segura a tu panel de control y continúa
+                administrando tu negocio con protección de nivel empresarial.
+            </p>
+            <form onSubmit={handleSubmit}>
+
+                <div className="input-group">
+                    <i className="ri-mail-line"></i>
+                    <input type="text" placeholder="Nombre de usuario" name="username" value={form.username} onChange={handleChange} required />
+                </div>
+
+                <div className="input-group">
+                    <i className="ri-lock-password-line"></i>
+                    <input type="password" placeholder="Contraseña" name="password" value={form.password} onChange={handleChange} required />
+                </div>
+
+                <div className="options">
+                    <a href="#" className="forgot">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+
+                <button type="submit" className="login-btn">
+                    Conectarse
+                </button>
+            </form>
+        </div>
     )
 }
 

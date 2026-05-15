@@ -1,4 +1,3 @@
-import './App.css'
 import UserContext from './context/UserContext.jsx'
 import RouteMap from './routes/RouteMap'
 
