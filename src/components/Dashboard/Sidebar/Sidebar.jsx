@@ -30,11 +30,6 @@ const Sidebar = () => {
                         <span className="logo-title">
                             Cutisfy
                         </span>
-
-                        <span className="logo-subtitle">
-                            Enterprise Dashboard
-                        </span>
-
                     </div>
 
                 </div>
@@ -92,7 +87,7 @@ const Sidebar = () => {
                     </Link>
 
                     <Link
-                        to="/admin"
+                        to="/admin/list"
                         className={`sidebar-btn ${location.pathname.includes("/admin")
                             ? "active"
                             : ""

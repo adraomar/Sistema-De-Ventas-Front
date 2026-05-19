@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import DataTable from '../../DataTable/DataTable'
 
 const ProductsList = () => {
     const [products, setProducts] = useState([
@@ -13,7 +14,19 @@ const ProductsList = () => {
         { id: 9, name: 'Producto 9', price: 900, stock: 5000 },
         { id: 10, name: 'Producto 10', price: 1000, stock: 5000 },
         { id: 11, name: 'Producto 11', price: 1100, stock: 5000 },
-        { id: 12, name: 'Producto 12', price: 1200, stock: 5000 }
+        { id: 12, name: 'Producto 12', price: 1200, stock: 5000 },
+        { id: 13, name: 'Producto 1', price: 100, stock: 5000 },
+        { id: 14, name: 'Producto 2', price: 200, stock: 5000 },
+        { id: 15, name: 'Producto 3', price: 300, stock: 5000 },
+        { id: 16, name: 'Producto 4', price: 400, stock: 5000 },
+        { id: 17, name: 'Producto 5', price: 500, stock: 5000 },
+        { id: 18, name: 'Producto 6', price: 600, stock: 5000 },
+        { id: 19, name: 'Producto 7', price: 700, stock: 5000 },
+        { id: 20, name: 'Producto 8', price: 800, stock: 5000 },
+        { id: 21, name: 'Producto 9', price: 900, stock: 5000 },
+        { id: 22, name: 'Producto 10', price: 1000, stock: 5000 },
+        { id: 23, name: 'Producto 11', price: 1100, stock: 5000 },
+        { id: 24, name: 'Producto 12', price: 1200, stock: 5000 }
     ])
 
     const [search, setSearch] = useState('')
@@ -76,165 +89,15 @@ const ProductsList = () => {
     }
 
     return (
-        <div className="container mt-4">
-            <h2 className="mb-4">Administrar Productos</h2>
-
-            <div className="d-flex justify-content-between mb-3">
-                <input
-                    type="text"
-                    className="form-control w-50"
-                    placeholder="Buscar producto..."
-                    value={search}
-                    onChange={(e) => handleSearch(e.target.value)}
-                />
-
-                <button className="btn btn-primary" onClick={handleCreate}>
-                    + Nuevo Producto
-                </button>
-            </div>
-
-            <table className="table table-striped">
-                <thead className="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Stock</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentProducts.map(product => (
-                        <tr key={product.id}>
-                            <td>{product.id}</td>
-                            <td>{product.name}</td>
-                            <td>${product.price}</td>
-                            <td>{product.stock}</td>
-                            <td>
-                                <button
-                                    className="btn btn-warning btn-sm me-2"
-                                    onClick={() => handleEdit(product)}
-                                >
-                                    Editar
-                                </button>
-                                <button
-                                    className="btn btn-danger btn-sm"
-                                    onClick={() => handleDelete(product.id)}
-                                >
-                                    Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            {/* PAGINACIÓN */}
-            <nav>
-                <ul className="pagination justify-content-center">
-                    <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
-                        <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)}>
-                            Anterior
-                        </button>
-                    </li>
-
-                    {[...Array(totalPages)].map((_, i) => (
-                        <li key={i} className={`page-item ${currentPage === i + 1 && 'active'}`}>
-                            <button className="page-link" onClick={() => setCurrentPage(i + 1)}>
-                                {i + 1}
-                            </button>
-                        </li>
-                    ))}
-
-                    <li className={`page-item ${currentPage === totalPages && 'disabled'}`}>
-                        <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)}>
-                            Siguiente
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-
-            {/* 🔥 MODAL */}
-            {showModal && (
-                <>
-                    <div className="modal-backdrop fade show"></div>
-
-                    <div className="modal fade show d-block" tabIndex="-1">
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-
-                                <div className="modal-header">
-                                    <h5 className="modal-title">
-                                        {currentProduct.id ? 'Editar' : 'Nuevo'} Producto
-                                    </h5>
-                                    <button
-                                        className="btn-close"
-                                        onClick={() => setShowModal(false)}
-                                    ></button>
-                                </div>
-
-                                <div className="modal-body">
-                                    <input
-                                        type="text"
-                                        className="form-control mb-3"
-                                        placeholder="Nombre"
-                                        value={currentProduct.name}
-                                        onChange={(e) =>
-                                            setCurrentProduct({
-                                                ...currentProduct,
-                                                name: e.target.value
-                                            })
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        className="form-control mb-3"
-                                        placeholder="Precio"
-                                        value={currentProduct.price}
-                                        onChange={(e) =>
-                                            setCurrentProduct({
-                                                ...currentProduct,
-                                                price: e.target.value
-                                            })
-                                        }
-                                    />
-
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        placeholder="Stock"
-                                        value={currentProduct.stock}
-                                        onChange={(e) =>
-                                            setCurrentProduct({
-                                                ...currentProduct,
-                                                stock: e.target.value
-                                            })
-                                        }
-                                    />
-                                </div>
-
-                                <div className="modal-footer">
-                                    <button
-                                        className="btn btn-secondary"
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        Cancelar
-                                    </button>
-                                    <button
-                                        className="btn btn-success"
-                                        onClick={handleSave}
-                                    >
-                                        Guardar
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </>
-            )}
-        </div>
+        <DataTable title="Administrar Productos"
+            columns={["ID", "Nombre", "Precio ($)", "Stock"]}
+            data={products}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onCreate={handleCreate}
+            search={search}
+            setSearch={setSearch}
+        />
     )
 }
 

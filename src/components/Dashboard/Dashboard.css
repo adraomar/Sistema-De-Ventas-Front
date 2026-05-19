@@ -17,7 +17,8 @@ body {
     font-family: 'Inter', sans-serif;
     background: #070b1a;
     color: #ffffff;
-    overflow: hidden;
+    overflow-x:hidden;
+    overflow-y:auto;
 }
 
 /* =========================================
@@ -171,8 +172,6 @@ body {
 .logo {
 
     display: flex;
-
-    align-items: flex-start;
 
     gap: 16px;
 
@@ -585,13 +584,15 @@ body {
    MAIN
 ========================================= */
 
-.dashboard-main {
+.dashboard-main{
 
-    flex: 1;
+    flex:1;
 
-    padding: 0 24px 24px 24px;
+    padding:0 24px 24px 24px;
 
-    overflow-y: auto;
+    overflow-y:auto;
+
+    height:calc(100vh - 120px);
 }
 
 /* =========================================

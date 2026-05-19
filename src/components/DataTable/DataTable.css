@@ -1,0 +1,318 @@
+.datatable-container {
+
+    width: 100%;
+
+    border-radius: 28px;
+
+    padding: 28px;
+
+    background: rgba(12, 18, 40, .82);
+
+    border: 1px solid rgba(255, 255, 255, .05);
+
+    backdrop-filter: blur(18px);
+}
+
+/* HEADER */
+
+.datatable-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 28px;
+}
+
+.datatable-header h2 {
+
+    font-size: 2rem;
+
+    margin-bottom: 6px;
+}
+
+.datatable-header p {
+
+    color: #8f96b2;
+
+    font-size: .92rem;
+}
+
+/* BUTTON */
+
+.datatable-create-btn {
+
+    border: none;
+
+    padding: 14px 22px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(135deg,
+            #5b6cff,
+            #7b5cf6);
+
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+
+    box-shadow:
+        0 0 25px rgba(91, 108, 255, .18);
+}
+
+.datatable-create-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 35px rgba(91, 108, 255, .28);
+}
+
+/* SEARCH */
+
+.datatable-search {
+
+    margin-bottom: 22px;
+}
+
+.datatable-search input {
+
+    width: 320px;
+
+    padding: 14px 18px;
+
+    border-radius: 16px;
+
+    border: 1px solid rgba(255, 255, 255, .05);
+
+    background: rgba(255, 255, 255, .03);
+
+    color: white;
+
+    outline: none;
+
+    transition: .25s ease;
+}
+
+.datatable-search input:focus {
+
+    border-color: rgba(91, 108, 255, .35);
+
+    box-shadow:
+        0 0 25px rgba(91, 108, 255, .16);
+}
+
+/* TABLE */
+
+.datatable-wrapper {
+
+    overflow-x: auto;
+}
+
+.datatable {
+
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.datatable thead {
+
+    background: rgba(255, 255, 255, .03);
+}
+
+.datatable th {
+
+    padding: 18px;
+
+    text-align: left;
+
+    color: #8f96b2;
+
+    font-size: .9rem;
+
+    font-weight: 600;
+
+    border-bottom: 1px solid rgba(255, 255, 255, .05);
+}
+
+.datatable td {
+
+    padding: 18px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, .04);
+
+    font-size: .95rem;
+}
+
+.datatable tbody tr {
+
+    transition: .25s ease;
+}
+
+.datatable tbody tr:hover {
+
+    background: rgba(255, 255, 255, .03);
+}
+
+/* ACTIONS */
+
+.datatable-actions {
+
+    display: flex;
+
+    gap: 12px;
+}
+
+/* EDIT */
+
+.edit-btn {
+
+    border: none;
+
+    padding: 10px 16px;
+
+    border-radius: 12px;
+
+    background: rgba(91, 108, 255, .15);
+
+    color: #8ea2ff;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+.edit-btn:hover {
+
+    background: rgba(91, 108, 255, .25);
+}
+
+/* DELETE */
+
+.delete-btn {
+
+    border: none;
+
+    padding: 10px 16px;
+
+    border-radius: 12px;
+
+    background: rgba(255, 59, 92, .12);
+
+    color: #ff7d9b;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+.delete-btn:hover {
+
+    background: rgba(255, 59, 92, .22);
+}
+
+/* =========================================
+   PAGINATION
+========================================= */
+
+.datatable-pagination {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 28px;
+
+    gap: 18px;
+}
+
+/* BUTTONS */
+
+.pagination-btn {
+
+    border: none;
+
+    padding: 12px 18px;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, .04);
+
+    border: 1px solid rgba(255, 255, 255, .05);
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+.pagination-btn:hover {
+
+    background: rgba(91, 108, 255, .12);
+
+    border-color: rgba(91, 108, 255, .18);
+}
+
+/* PAGES */
+
+.pagination-pages {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.pagination-number {
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, .04);
+
+    border: 1px solid rgba(255, 255, 255, .05);
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+.pagination-number:hover {
+
+    background: rgba(91, 108, 255, .12);
+
+    border-color: rgba(91, 108, 255, .18);
+}
+
+/* ACTIVE */
+
+.pagination-number.active {
+
+    background:
+        linear-gradient(135deg,
+            #5b6cff,
+            #7b5cf6);
+
+    border: none;
+
+    box-shadow:
+        0 0 20px rgba(91, 108, 255, .18);
+}
