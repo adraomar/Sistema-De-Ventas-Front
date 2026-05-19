@@ -1,68 +1,164 @@
 import React, { useContext } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import imgLogo from "../../../assets/images/cutisfy-logo.png";
 import { userContext } from '../../../context/userContext';
 
-
 const Sidebar = () => {
+
     const { user } = useContext(userContext);
 
+    const location = useLocation();
+
     return (
-        <div id="layoutSidenav_nav">
-            <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div className="sb-sidenav-menu">
-                    <div className="nav">
-                        <div className="sb-sidenav-menu-heading">Principal</div>
-                        <Link className="nav-link" to="/dashboard">
-                            <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
-                            Dashboard
-                        </Link>
-                        <div className="sb-sidenav-menu-heading">Gestion</div>
-                        <Link className="nav-link collapsed" to="/sales" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapseSales">
-                            <div className="sb-nav-link-icon"><i className="fa fa-shopping-bag" aria-hidden="true"></i></div>
-                            Ventas
-                            <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
-                        </Link>
-                        <div className="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav className="sb-sidenav-menu-nested nav">
-                                <Link className="nav-link" to="/sales/new">Nueva venta</Link>
-                                <Link className="nav-link" to="/sales/list">Listado de ventas</Link>
-                            </nav>
-                        </div>
-                        <Link className="nav-link collapsed" to="/products" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
-                            <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
-                            Productos
-                            <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
-                        </Link>
-                        <div className="collapse" id="collapseProducts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav className="sb-sidenav-menu-nested nav">
-                                <Link className="nav-link" to="/products/new">Nueva producto</Link>
-                                <Link className="nav-link" to="/products/list">Listado de productos</Link>
-                            </nav>
-                        </div>
-                        <div className="sb-sidenav-menu-heading">Administracion</div>
-                        <Link className="nav-link collapsed" to="/admin" data-bs-toggle="collapse" data-bs-target="#collapseAdmin" aria-expanded="false" aria-controls="collapseAdmin">
-                            <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
-                            Usuarios
-                            <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
-                        </Link>
-                        <div className="collapse" id="collapseAdmin" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav className="sb-sidenav-menu-nested nav">
-                                <Link className="nav-link" to="/admin/new">Crear usuario</Link>
-                                <Link className="nav-link" to="/admin/list">Listado de usuarios</Link>
-                            </nav>
-                        </div>
-                        <Link className="nav-link" to="/logs">
-                            <div className="sb-nav-link-icon"><i className="fas fa-table"></i></div>
-                            Logs      
-                        </Link>
+
+        <aside className="sidebar">
+
+            <div>
+
+                {/* LOGO */}
+
+                <div className="logo">
+
+                    <img
+                        src={imgLogo}
+                        className="img-logo"
+                        alt="Cutisfy Logo"
+                    />
+
+                    <div className="logo-text">
+
+                        <span className="logo-title">
+                            Cutisfy
+                        </span>
+
+                        <span className="logo-subtitle">
+                            Enterprise Dashboard
+                        </span>
+
                     </div>
+
                 </div>
-                <div className="sb-sidenav-footer">
-                    <div className="small">Te has conectado como:</div>
-                    {user?.lastname}, {user?.firstname}
+
+                {/* MENU */}
+
+                <nav className="sidebar-menu">
+
+                    <Link
+                        to="/dashboard"
+                        className={`sidebar-btn ${location.pathname === "/dashboard"
+                            ? "active"
+                            : ""
+                            }`}
+                    >
+
+                        <span>
+                            Dashboard
+                        </span>
+
+                        <div className="sidebar-dot"></div>
+
+                    </Link>
+
+                    <Link
+                        to="/sales"
+                        className={`sidebar-btn ${location.pathname.includes("/sales")
+                            ? "active"
+                            : ""
+                            }`}
+                    >
+
+                        <span>
+                            Ventas
+                        </span>
+
+                        <div className="sidebar-dot"></div>
+
+                    </Link>
+
+                    <Link
+                        to="/products"
+                        className={`sidebar-btn ${location.pathname.includes("/products")
+                            ? "active"
+                            : ""
+                            }`}
+                    >
+
+                        <span>
+                            Productos
+                        </span>
+
+                        <div className="sidebar-dot"></div>
+
+                    </Link>
+
+                    <Link
+                        to="/admin"
+                        className={`sidebar-btn ${location.pathname.includes("/admin")
+                            ? "active"
+                            : ""
+                            }`}
+                    >
+
+                        <span>
+                            Usuarios
+                        </span>
+
+                        <div className="sidebar-dot"></div>
+
+                    </Link>
+
+                    <Link
+                        to="/logs"
+                        className={`sidebar-btn ${location.pathname.includes("/logs")
+                            ? "active"
+                            : ""
+                            }`}
+                    >
+
+                        <span>
+                            Logs
+                        </span>
+
+                        <div className="sidebar-dot"></div>
+
+                    </Link>
+
+                </nav>
+
+            </div>
+
+            {/* USER */}
+
+            <div className="user-card">
+
+                <div className="user-info">
+
+                    <div className="user-avatar">
+
+                        {
+                            user?.firstname?.charAt(0)
+                        }
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            {user?.lastname}, {user?.firstname}
+                        </h3>
+
+                        <p>
+                            Administrador
+                        </p>
+
+                    </div>
+
                 </div>
-            </nav>
-        </div>
+
+            </div>
+
+        </aside>
+
     )
 }
 

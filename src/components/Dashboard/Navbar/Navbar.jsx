@@ -1,41 +1,96 @@
 import React, { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+
 import { userContext } from '../../../context/userContext.js';
 
 const Navbar = () => {
+
     const navigate = useNavigate();
+
     const { user } = useContext(userContext);
 
-    const handleClick = () => {
+    const handleLogout = () => {
+
+        localStorage.removeItem("token");
+
         navigate("/");
     };
 
     return (
-        <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <Link className="navbar-brand ps-3" to="/dashboard">Puesto de Ventas</Link>
-            <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div className="input-group">
-                    <input className="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..." aria-describedby="btnNavbarSearch" />
-                    <button className="btn btn-primary" id="btnNavbarSearch" type="button"><i className="fas fa-search"></i></button>
-                </div>
-            </form>
-            <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li className="nav-item dropdown">
-                    <Link className="nav-link dropdown-toggle" id="navbarDropdown" to="/dashboard" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i className="fas fa-user fa-fw"></i> {user?.username}</Link>
-                    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
-                        <li><Link className="dropdown-item" to="settings">
-                            Ajustes
-                        </Link></li>
-                        <li><Link className="dropdown-item" to="users">
-                            Preferencias
-                        </Link></li>
-                        <li><hr className="dropdown-divider" /></li>
-                        <li><a className="dropdown-item" onClick={handleClick}>Desconectarse</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
+        <header className="dashboard-navbar">
+
+            {/* LEFT */}
+
+            <div>
+
+                <h1 className="dashboard-title">
+                    Dashboard
+                </h1>
+
+                <p className="dashboard-subtitle">
+                    Bienvenido nuevamente, {user?.firstname}
+                </p>
+
+            </div>
+
+            {/* RIGHT */}
+
+            <div className="navbar-actions">
+
+                {/* SEARCH */}
+
+                <div className="search-box">
+
+                    <input
+                        type="text"
+                        placeholder="Buscar..."
+                        className="search-input"
+                    />
+
+                </div>
+
+                {/* USER */}
+
+                <div className="navbar-user">
+
+                    <div className="navbar-avatar">
+
+                        {
+                            user?.firstname?.charAt(0)
+                        }
+
+                    </div>
+
+                    <div className="navbar-user-info">
+
+                        <span>
+                            {user?.username}
+                        </span>
+
+                        <small>
+                            Administrador
+                        </small>
+
+                    </div>
+
+                </div>
+
+                {/* LOGOUT */}
+
+                <button
+                    className="logout-btn"
+                    onClick={handleLogout}
+                >
+
+                    Desconectarse
+
+                </button>
+
+            </div>
+
+        </header>
+
     )
 }
 
